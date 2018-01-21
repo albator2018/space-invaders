@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Space Invaders</title>
+    <link href="favicon.ico" rel="shortcut icon">
+    <style type="text/css">
+      @font-face {
+        font-family: 'silkscreen';
+        src: url('./assets/fonts/slkscr-webfont.eot');
+        src: url('./assets/fonts/slkscr-webfont.eot?#iefix') format('embedded-opentype'),
+             url('./assets/fonts/slkscr-webfont.woff') format('woff'),
+             url('./assets/fonts/slkscr-webfont.ttf') format('truetype'),
+             url('./assets/fonts/slkscr-webfont.svg#silkscreennormal') format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: 'silkscreen';
+        src: url('./assets/fonts/slkscreb-webfont.eot');
+        src: url('./assets/fonts/slkscreb-webfont.eot?#iefix') format('embedded-opentype'),
+             url('./assets/fonts/slkscreb-webfont.woff') format('woff'),
+             url('./assets/fonts/slkscreb-webfont.ttf') format('truetype'),
+             url('./assets/fonts/slkscreb-webfont.svg#silkscreen_expandedbold') format('svg');
+        font-weight: bold;
+        font-style: normal;
+      }
+
+      * {
+        background: #222;
+        color: white;
+        font-family: 'silkscreen';
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script src="phaser.min.js" type="text/javascript"></script>
+  </head>
+
+  <body class="index">
+    <div id="game"></div>
+    <script src="game.js" type="text/javascript"></script>
+  </body>
+</html>
