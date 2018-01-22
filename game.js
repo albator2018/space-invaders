@@ -103,9 +103,6 @@ function fireBullet () {
 }
 
 function updateScore () {
-  if (score > highScore) {
-    highScore = score;
-  }
   scoreText.text = "SCORE: " + score;
 }
 
