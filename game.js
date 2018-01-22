@@ -1,10 +1,9 @@
 var game = new Phaser.Game(640, 480, Phaser.AUTO, 'game', { preload: preload, create: create, update: update });
 
 var bulletTime = 0,
-    initialPlayerPosition = 512;
+    initialPlayerPosition = 512,
     lives = 3,
-    score = 0,
-    highScore = 0;
+    score = 0;
 
 var style = { font: "32px silkscreen", fill: "#666666", align: "center" },
     boldStyle = { font: "bold 32px silkscreen", fill: "#ffffff", align: "center" };
@@ -17,10 +16,10 @@ function preload () {
   game.load.spritesheet('explosion', 'assets/explosion.png', 80, 80);
   game.load.atlasJSONArray('invaders', 'images/spritesheets/invaders.png', 'images/spritesheets/invaders.json');
 
-  game.load.audio('shoot', 'assets/sounds/shoot.wav');
+  game.load.audio('shoot', 'assets/sounds/invaderkilled.wav');
   game.load.audio('explode', 'assets/sounds/invaderkilled.wav');
   game.load.audio('explosion', 'assets/sounds/explosion.wav');
-  game.load.audio('bomb', 'assets/sounds/bomb.wav');
+  game.load.audio('bomb', 'assets/sounds/shoot.wav');
 }
 
 function create () {
@@ -88,19 +87,6 @@ function setupExplosion (explosion) {
   explosion.animations.add('explode');
 }
 
-function playerMovement () {
-
-  if (cursors.left.isDown) {
-    // Move to the left
-    player.body.x -= 5;
-  }
-
-  if (cursors.right.isDown) {
-    // Move to the right
-    player.body.x += 5;
-  }
-}
-
 function fireBullet () {
   if (game.time.now > bulletTime) {
     bullet = bullets.getFirstExists(false);
@@ -110,7 +96,7 @@ function fireBullet () {
       shootSound.play();
       bullet.reset(player.x, player.y - 16);
       bullet.body.velocity.y = -400;
-      bullet.body.velocity.x = player.body.velocity.x / 4
+      bullet.body.velocity.x = player.body.velocity.x / 4;
       bulletTime = game.time.now + 400;
     }
   }
@@ -190,8 +176,9 @@ function restartGame () {
   gameOverText.destroy();
   restartText.destroy();
 
-  lives = 3
-  score = 0
+  lives = 3;
+  score = 0;
+
   updateScore();
   updateLivesText();
 
@@ -200,10 +187,10 @@ function restartGame () {
 }
 
 function gameOver () {
-    gameOverText = game.add.text(game.world.centerX, game.world.centerY, "GAME OVER", boldStyle);
-    gameOverText.anchor.set(0.5, 0.5);
-    restartText = game.add.text(game.world.centerX, game.world.height - 16, "PRESS 'S' TO RESTART", style);
-    restartText.anchor.set(0.5, 1);
+  gameOverText = game.add.text(game.world.centerX, game.world.centerY, "GAME OVER", boldStyle);
+  gameOverText.anchor.set(0.5, 0.5);
+  restartText = game.add.text(game.world.centerX, game.world.height - 16, "PRESS 'S' TO RESTART", style);
+  restartText.anchor.set(0.5, 1);
 }
 
 function createAliens () {
@@ -225,11 +212,12 @@ function createAliens () {
 }
 
 function animateAliens () {
-  // All this does is basically start the invaders moving. Notice we're moving the Group they belong to, rather than the invaders directly.
   var tween = game.add.tween(aliens).to( { x: 100 }, 2500, Phaser.Easing.Linear.None, true, 0, 1000, true);
-
-  // When the tween loops it calls descend
   tween.onLoop.add(descend, this);
+}
+
+function descend () {
+  aliens.y += 10;
 }
 
 function handleBombs () {
@@ -238,7 +226,7 @@ function handleBombs () {
     if (chanceOfDroppingBomb == 0) {
       dropBomb(alien);
     }
-  }, this)
+  }, this);
 }
 
 function dropBomb (alien) {
@@ -250,24 +238,20 @@ function dropBomb (alien) {
     // And drop it
     bomb.reset(alien.x + aliens.x, alien.y + aliens.y + 16);
     bomb.body.velocity.y = +100;
-    bomb.body.gravity.y = 250
+    bomb.body.gravity.y = 250;
   }
-}
-
-function descend () {
-  aliens.y += 10;
-}
-
-function pad(number, length) {
-  var str = '' + number;
-  while (str.length < length) {
-    str = '0' + str;
-  }
-  return str;
 }
 
 function update () {
-  playerMovement();
+  if (cursors.left.isDown) {
+    // Move to the left
+    player.body.x -= 5;
+  }
+
+  if (cursors.right.isDown) {
+    // Move to the right
+    player.body.x += 5;
+  }
 
   // Firing?
   if (fireButton.isDown && player.alive) {
