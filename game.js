@@ -16,10 +16,10 @@ function preload () {
   game.load.spritesheet('explosion', 'assets/explosion.png', 80, 80);
   game.load.atlasJSONArray('invaders', 'images/spritesheets/invaders.png', 'images/spritesheets/invaders.json');
 
-  game.load.audio('shoot', 'assets/sounds/invaderkilled.wav');
+  game.load.audio('shoot', 'assets/sounds/shoot.wav');
   game.load.audio('explode', 'assets/sounds/invaderkilled.wav');
   game.load.audio('explosion', 'assets/sounds/explosion.wav');
-  game.load.audio('bomb', 'assets/sounds/shoot.wav');
+  game.load.audio('bomb', 'assets/sounds/bom.wav');
 }
 
 function create () {
