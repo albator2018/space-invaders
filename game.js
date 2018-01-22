@@ -19,7 +19,7 @@ function preload () {
   game.load.audio('shoot', 'assets/sounds/shoot.wav');
   game.load.audio('explode', 'assets/sounds/invaderkilled.wav');
   game.load.audio('explosion', 'assets/sounds/explosion.wav');
-  game.load.audio('bomb', 'assets/sounds/bom.wav');
+  game.load.audio('bomb', 'assets/sounds/bomb.wav');
 }
 
 function create () {
